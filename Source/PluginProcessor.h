@@ -25,11 +25,12 @@ public:
     ~MooseAudioProcessor();
 
     //==============================================================================
-    void prepareToPlay (double sampleRate, int samplesPerBlock) override;
+    void prepareToPlay(double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
 
-    void processBlock (AudioSampleBuffer&, MidiBuffer&) override;
-
+    void processBlock(AudioSampleBuffer&, MidiBuffer&) override;
+    void render(AudioSampleBuffer&, int, int);
+    
     //==============================================================================
     AudioProcessorEditor* createEditor() override;
     bool hasEditor() const override;
@@ -65,7 +66,18 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+protected:
+    //==============================================================================
+    /** This is used to control access to the rendering callback and the note trigger methods. */
+    CriticalSection lock;
+    
 private:
+    //==============================================================================
+    double mSampleRate;
+    double mCurrentAngle;
+    double mAngleDelta;
+    bool isPlaying;
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MooseAudioProcessor)
 };

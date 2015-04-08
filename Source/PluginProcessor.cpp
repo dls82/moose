@@ -10,11 +10,16 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "juce_MidiBuffer.h"
 
 
 //==============================================================================
 MooseAudioProcessor::MooseAudioProcessor()
 {
+    mSampleRate = 0;
+    mCurrentAngle = 0;
+    mAngleDelta = 0;
+    isPlaying = false;
 }
 
 MooseAudioProcessor::~MooseAudioProcessor()
@@ -124,10 +129,13 @@ void MooseAudioProcessor::changeProgramName (int index, const String& newName)
 }
 
 //==============================================================================
-void MooseAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+void MooseAudioProcessor::prepareToPlay (double sampleRate, int /**samplesPerBlock*/)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
+    if (mSampleRate != sampleRate)
+    {
+        const ScopedLock sl (lock);
+        mSampleRate = sampleRate;
+    }
 }
 
 void MooseAudioProcessor::releaseResources()
@@ -147,13 +155,65 @@ void MooseAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& m
     for (int i = getNumInputChannels(); i < getNumOutputChannels(); ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    for (int channel = 0; channel < getNumInputChannels(); ++channel)
+    // must set the sample rate before using this!
+    jassert (mSampleRate != 0);
+    
+    const ScopedLock sl (lock);
+    
+    int numSamples = buffer.getNumSamples();
+    int startSample = 0;
+    MidiBuffer::Iterator midiIterator (midiMessages);
+    midiIterator.setNextSamplePosition (0);
+    MidiMessage m (0xf4, 0.0);
+    
+    while (numSamples > 0)
     {
-        float* channelData = buffer.getWritePointer (channel);
+        int midiEventPos;
+        const bool useEvent
+            = midiIterator.getNextEvent (m, midiEventPos)
+                && midiEventPos < startSample + numSamples;
+        const int numThisTime = useEvent ? midiEventPos - startSample : numSamples;
 
-        // ..do something to the data...
+        // render up to the next event (or end of buffer) using current state
+        if (numThisTime > 0)
+            render(buffer, startSample, numThisTime);
+        
+        // update state based on next event (if it exists)
+        if (useEvent)
+        {
+            if (m.isNoteOn())
+            {
+                const double cyclesPerSecond = MidiMessage::getMidiNoteInHertz (m.getNoteNumber());
+                const double cyclesPerSample = cyclesPerSecond / getSampleRate();
+                mAngleDelta = cyclesPerSample * 2.0 * double_Pi;
+                mCurrentAngle = 0.0;
+                isPlaying = true;
+            }
+            else if (m.isNoteOff())
+            {
+                mAngleDelta = 0.0;
+                isPlaying = false;
+            }
+        }
+
+        startSample += numThisTime;
+        numSamples -= numThisTime;
+    }
+}
+
+void MooseAudioProcessor::render(AudioSampleBuffer& buffer, int currentIndex, int numSamples)
+{
+    if(!isPlaying)
+        return;
+    
+    // idiom for looping over buffer
+    while (--numSamples >= 0)
+    {
+        const float currentSample = (float) (sin(mCurrentAngle));
+        for (int i = buffer.getNumChannels(); --i >= 0;)
+            buffer.addSample (i, currentIndex, currentSample);
+        mCurrentAngle += mAngleDelta;
+        ++currentIndex;
     }
 }
 
