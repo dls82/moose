@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="aNk5yk" name="Moose" projectType="audioplug" version="1.0.0"
               bundleIdentifier="com.alces.alces" includeBinaryInAppConfig="1"
-              buildVST="0" buildVST3="0" buildAU="1" buildRTAS="0" buildAAX="0"
+              buildVST="1" buildVST3="1" buildAU="1" buildRTAS="0" buildAAX="0"
               pluginName="Moose" pluginDesc="Moose" pluginManufacturer="AlcesAlces"
               pluginManufacturerCode="ALCS" pluginCode="MOOS" pluginChannelConfigs="{1, 1}, {2, 2}"
               pluginIsSynth="1" pluginWantsMidiIn="1" pluginProducesMidiOut="0"
@@ -46,22 +46,47 @@
         <MODULEPATH id="juce_audio_plugin_client" path="../JUCE-OSX/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
+    <LINUX_MAKE targetFolder="Builds/Linux" vstFolder="/home/derek/Documents/VST3"
+                vst3Folder="/home/derek/Documents/VST3">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" libraryPath="/usr/X11R6/lib/" isDebug="1" optimisation="1"
+                       targetName="Moose" headerPath="/usr/include/freetype2"/>
+        <CONFIGURATION name="Release" libraryPath="/usr/X11R6/lib/" isDebug="0" optimisation="2"
+                       targetName="Moose" headerPath="/usr/include/freetype2"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_video" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_opengl" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_graphics" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_events" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_data_structures" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_cryptography" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_core" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+      </MODULEPATHS>
+    </LINUX_MAKE>
   </EXPORTFORMATS>
   <MODULES>
-    <MODULES id="juce_audio_basics" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_audio_devices" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_audio_formats" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_audio_processors" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_core" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_cryptography" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_events" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_graphics" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_gui_basics" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_gui_extra" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_opengl" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_video" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_audio_basics" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_devices" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_formats" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_processors" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_core" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_cryptography" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_events" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_graphics" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_gui_basics" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_gui_extra" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_opengl" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_video" showAllCode="1" useLocalCopy="1"/>
   </MODULES>
   <JUCEOPTIONS JUCE_QUICKTIME="disabled"/>
 </JUCERPROJECT>
