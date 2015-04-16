@@ -10,7 +10,9 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-#include "juce_MidiBuffer.h"
+
+#include <modules/juce_audio_basics/midi/juce_MidiBuffer.h>
+#include <modules/juce_audio_basics/midi/juce_MidiMessage.h>
 
 
 //==============================================================================
@@ -19,7 +21,7 @@ MooseAudioProcessor::MooseAudioProcessor()
     mSampleRate = 0;
     mCurrentAngle = 0;
     mAngleDelta = 0;
-    isPlaying = false;
+    mIsPlaying = false;
 }
 
 MooseAudioProcessor::~MooseAudioProcessor()
@@ -187,12 +189,12 @@ void MooseAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& m
                 const double cyclesPerSample = cyclesPerSecond / getSampleRate();
                 mAngleDelta = cyclesPerSample * 2.0 * double_Pi;
                 mCurrentAngle = 0.0;
-                isPlaying = true;
+                mIsPlaying = true;
             }
             else if (m.isNoteOff())
             {
                 mAngleDelta = 0.0;
-                isPlaying = false;
+                mIsPlaying = false;
             }
         }
 
@@ -203,7 +205,7 @@ void MooseAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& m
 
 void MooseAudioProcessor::render(AudioSampleBuffer& buffer, int currentIndex, int numSamples)
 {
-    if(!isPlaying)
+    if(!mIsPlaying)
         return;
     
     // idiom for looping over buffer

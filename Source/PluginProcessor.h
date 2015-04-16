@@ -29,7 +29,6 @@ public:
     void releaseResources() override;
 
     void processBlock(AudioSampleBuffer&, MidiBuffer&) override;
-    void render(AudioSampleBuffer&, int, int);
     
     //==============================================================================
     AudioProcessorEditor* createEditor() override;
@@ -73,10 +72,13 @@ protected:
     
 private:
     //==============================================================================
+    void render(AudioSampleBuffer&, int, int);
+
+    //==============================================================================
     double mSampleRate;
     double mCurrentAngle;
     double mAngleDelta;
-    bool isPlaying;
+    bool mIsPlaying;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MooseAudioProcessor)
