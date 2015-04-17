@@ -47,8 +47,7 @@
         <MODULEPATH id="juce_audio_plugin_client" path="../JUCE-OSX/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
-    <LINUX_MAKE targetFolder="Builds/Linux" vstFolder="/home/derek/Documents/VST3"
-                vst3Folder="/home/derek/Documents/VST3">
+    <LINUX_MAKE targetFolder="Builds/Linux" vstFolder="/usr/local/lib/VST" vst3Folder="/usr/local/lib/VST">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" libraryPath="/usr/X11R6/lib/" isDebug="1" optimisation="1"
                        targetName="Moose" headerPath="/usr/include/freetype2"/>
@@ -56,20 +55,20 @@
                        targetName="Moose" headerPath="/usr/include/freetype2"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="/home/derek/Documents/JUCE-LINUX/modules"/>
-        <MODULEPATH id="juce_opengl" path="/home/derek/Documents/JUCE-LINUX/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="/home/derek/Documents/JUCE-LINUX/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="/home/derek/Documents/JUCE-LINUX/modules"/>
-        <MODULEPATH id="juce_graphics" path="/home/derek/Documents/JUCE-LINUX/modules"/>
-        <MODULEPATH id="juce_events" path="/home/derek/Documents/JUCE-LINUX/modules"/>
-        <MODULEPATH id="juce_data_structures" path="/home/derek/Documents/JUCE-LINUX/modules"/>
-        <MODULEPATH id="juce_cryptography" path="/home/derek/Documents/JUCE-LINUX/modules"/>
-        <MODULEPATH id="juce_core" path="/home/derek/Documents/JUCE-LINUX/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="/home/derek/Documents/JUCE-LINUX/modules"/>
-        <MODULEPATH id="juce_audio_plugin_client" path="/home/derek/Documents/JUCE-LINUX/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="/home/derek/Documents/JUCE-LINUX/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="/home/derek/Documents/JUCE-LINUX/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_video" path="/usr/local/lib/JUCE/modules/"/>
+        <MODULEPATH id="juce_opengl" path="/usr/local/lib/JUCE/modules/"/>
+        <MODULEPATH id="juce_gui_extra" path="/usr/local/lib/JUCE/modules/"/>
+        <MODULEPATH id="juce_gui_basics" path="/usr/local/lib/JUCE/modules/"/>
+        <MODULEPATH id="juce_graphics" path="/usr/local/lib/JUCE/modules/"/>
+        <MODULEPATH id="juce_events" path="/usr/local/lib/JUCE/modules/"/>
+        <MODULEPATH id="juce_data_structures" path="/usr/local/lib/JUCE/modules/"/>
+        <MODULEPATH id="juce_cryptography" path="/usr/local/lib/JUCE/modules/"/>
+        <MODULEPATH id="juce_core" path="/usr/local/lib/JUCE/modules/"/>
+        <MODULEPATH id="juce_audio_processors" path="/usr/local/lib/JUCE/modules/"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="/usr/local/lib/JUCE/modules/"/>
+        <MODULEPATH id="juce_audio_formats" path="/usr/local/lib/JUCE/modules/"/>
+        <MODULEPATH id="juce_audio_devices" path="/usr/local/lib/JUCE/modules/"/>
+        <MODULEPATH id="juce_audio_basics" path="/usr/local/lib/JUCE/modules/"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <CODEBLOCKS targetFolder="Builds/CodeBlocks" vstFolder="/home/derek/Documents/VST3"
