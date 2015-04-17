@@ -8,7 +8,7 @@ MonoSynth::MonoSynth()
 {
     mSampleRate = 0;
     mCurrentAngle = 0;
-    mAngleDelta = 0;
+    mNoteNumber = 0;
     mIsPlaying = false;
 }
 
@@ -58,15 +58,12 @@ void MonoSynth::processBlock(AudioSampleBuffer& buffer, MidiBuffer& midiMessages
         {
             if (m.isNoteOn())
             {
-                const double cyclesPerSecond = MidiMessage::getMidiNoteInHertz (m.getNoteNumber());
-                const double cyclesPerSample = cyclesPerSecond / mSampleRate;
-                mAngleDelta = cyclesPerSample * 2.0 * double_Pi;
+                mNoteNumber = m.getNoteNumber();
                 mCurrentAngle = 0.0;
                 mIsPlaying = true;
             }
             else if (m.isNoteOff())
             {
-                mAngleDelta = 0.0;
                 mIsPlaying = false;
             }
         }
@@ -82,13 +79,17 @@ void MonoSynth::render(AudioSampleBuffer& buffer, int currentIndex, int numSampl
     if(!mIsPlaying)
         return;
 
+    const double cyclesPerSecond = MidiMessage::getMidiNoteInHertz (mNoteNumber);
+    const double cyclesPerSample = cyclesPerSecond / mSampleRate;
+    const double angleDelta = cyclesPerSample * 2.0 * double_Pi;
+
     // idiom for looping over buffer
     while (--numSamples >= 0)
     {
         const float currentSample = (float) (sin(mCurrentAngle));
         for (int i = buffer.getNumChannels(); --i >= 0;)
             buffer.addSample (i, currentIndex, currentSample);
-        mCurrentAngle += mAngleDelta;
+        mCurrentAngle += angleDelta;
         ++currentIndex;
     }
 }

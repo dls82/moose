@@ -31,7 +31,7 @@ private:
     //==============================================================================
     double mSampleRate;
     double mCurrentAngle;
-    double mAngleDelta;
+    int mNoteNumber;
     bool mIsPlaying;
 };
 
