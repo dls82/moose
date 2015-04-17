@@ -12,6 +12,8 @@
               companyName="AlcesAlces">
   <MAINGROUP id="ZApR3d" name="Moose">
     <GROUP id="{4D8CA681-6AAA-DC07-1C23-795FF5AA4D57}" name="Source">
+      <FILE id="p2yd3q" name="MonoSynth.cpp" compile="1" resource="0" file="Source/MonoSynth.cpp"/>
+      <FILE id="BbRhfp" name="MonoSynth.h" compile="0" resource="0" file="Source/MonoSynth.h"/>
       <FILE id="IZoSd1" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="t1VDKP" name="PluginProcessor.h" compile="0" resource="0"
