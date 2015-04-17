@@ -123,7 +123,7 @@ void MooseAudioProcessor::changeProgramName (int index, const String& newName)
 }
 
 //==============================================================================
-void MooseAudioProcessor::prepareToPlay (double sampleRate, int /**samplesPerBlocklock*/)
+void MooseAudioProcessor::prepareToPlay (double sampleRate, int /**samplesPerBlock*/)
 {
     mMonoSynth.setSampleRate(sampleRate);
 }
