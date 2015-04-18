@@ -1,6 +1,8 @@
 #ifndef MONOSYNTH_H_INCLUDED
 #define MONOSYNTH_H_INCLUDED
 
+#include <list>
+
 #include "../JuceLibraryCode/JuceHeader.h"
 #include <modules/juce_audio_basics/buffers/juce_AudioSampleBuffer.h>
 #include <modules/juce_audio_basics/midi/juce_MidiBuffer.h>
@@ -31,8 +33,8 @@ private:
     //==============================================================================
     double mSampleRate;
     double mCurrentAngle;
-    int mNoteNumber;
-    bool mIsPlaying;
+    int mNoteCurrent;
+    std::list<int> mNoteList;
 };
 
 #endif  // MONOSYNTH_H_INCLUDED
