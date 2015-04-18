@@ -1,6 +1,5 @@
 #include "MonoSynth.h"
 
-#include "../JuceLibraryCode/JuceHeader.h"
 #include <modules/juce_audio_basics/midi/juce_MidiMessage.h>
 
 //==============================================================================
@@ -49,8 +48,10 @@ void MonoSynth::processBlock(AudioSampleBuffer& buffer, MidiBuffer& midiMessages
         const int numThisTime = useEvent ? midiEventPos - startSample : numSamples;
 
         // render up to the next event (or end of buffer) using current state
-        if (numThisTime > 0)
-            render(buffer, startSample, numThisTime);
+        if (numThisTime > 0) {
+            oscillate(buffer, startSample, numThisTime);
+            mEnvelope.processBlock(buffer, startSample, numThisTime);
+        }
 
         // update state based on next event (if it exists)
         if (useEvent)
@@ -60,11 +61,14 @@ void MonoSynth::processBlock(AudioSampleBuffer& buffer, MidiBuffer& midiMessages
                 mNoteCurrent = m.getNoteNumber();
                 mNoteList.push_back(mNoteCurrent);
                 mCurrentAngle = 0.0;
+                mEnvelope.on();
             }
             else if (m.isNoteOff())
             {
                 mNoteList.remove(m.getNoteNumber());
-                if(!mNoteList.empty())
+                if(mNoteList.empty())
+                    mEnvelope.off();
+                else
                     mNoteCurrent = mNoteList.back();
             }
         }
@@ -75,7 +79,7 @@ void MonoSynth::processBlock(AudioSampleBuffer& buffer, MidiBuffer& midiMessages
 }
 
 //==============================================================================
-void MonoSynth::render(AudioSampleBuffer& buffer, int currentIndex, int numSamples)
+void MonoSynth::oscillate(AudioSampleBuffer& buffer, int currentIndex, int numSamples)
 {
     const double cyclesPerSecond = MidiMessage::getMidiNoteInHertz(mNoteCurrent);
     const double cyclesPerSample = cyclesPerSecond / mSampleRate;
