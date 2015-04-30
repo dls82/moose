@@ -18,19 +18,17 @@ Envelope::~Envelope()
 }
 
 //==============================================================================
-void Envelope::on()
+void Envelope::setSampleRate(const double sampleRate)
 {
-  setState(attack);
+    if (mSampleRate != sampleRate)
+    {
+        // const ScopedLock sl(lock);
+        mSampleRate = sampleRate;
+    }
 }
 
 //==============================================================================
-void Envelope::off()
-{
-  setState(release);
-}
-
-//==============================================================================
-void Envelope::setState(EnvelopeStates state)
+void Envelope::setEnvelopeState(EnvelopeStates state)
 {
   mClock = 0;
   mBlocksSeen = 0;
@@ -39,14 +37,26 @@ void Envelope::setState(EnvelopeStates state)
 }
 
 //==============================================================================
+void Envelope::on()
+{
+  setEnvelopeState(attack);
+}
+
+//==============================================================================
+void Envelope::off()
+{
+  setEnvelopeState(release);
+}
+
+//==============================================================================
 void Envelope::processBlock(AudioSampleBuffer& buffer, int currentIndex, int numSamples)
 {
-  // ofstream myfile("/home/andrewrynhard/Desktop/gain.txt", ofstream::out | ofstream::app);
-  //  if (myfile.is_open())
+  // ofstream gainFile("/home/andrewrynhard/Desktop/gain.txt", ofstream::out | ofstream::app);
+  //  if (gainFile.is_open())
   //  {
-  //    myfile << mGain;
-  //    myfile << ",\n";
-  //    myfile.close();
+  //    gainFile << mGain;
+  //    gainFile << ",\n";
+  //    gainFile.close();
   //  }
   //  else cout << "Unable to open file";
 
@@ -57,7 +67,7 @@ void Envelope::processBlock(AudioSampleBuffer& buffer, int currentIndex, int num
     for(int i = currentIndex; i < numSamples; i++)
     {
       if (mCurrentState != sustain) {
-        mClock = (i + numSamples * mBlocksSeen) / 44100.0;
+        mClock = (i + numSamples * mBlocksSeen) / mSampleRate;
       }
 
       switch (mCurrentState) {
@@ -74,8 +84,7 @@ void Envelope::processBlock(AudioSampleBuffer& buffer, int currentIndex, int num
 
           if (mClock >= 5 * mAttackTau)
           {
-            // printf("ATTACK: Gain: %f\tState: %d\n", mGain, mCurrentState);
-            setState(decay);
+            setEnvelopeState(decay);
           }
 
           break;
@@ -85,8 +94,7 @@ void Envelope::processBlock(AudioSampleBuffer& buffer, int currentIndex, int num
 
           if (mClock >= 5 * mDecayTau || mGain < mSustainGain)
           {
-            printf("DECAY: Gain: %f\tState: %d\n", mGain, mCurrentState);
-            setState(sustain);
+            setEnvelopeState(sustain);
           }
 
           break;
@@ -100,8 +108,7 @@ void Envelope::processBlock(AudioSampleBuffer& buffer, int currentIndex, int num
 
           if (mClock >= 5 * mReleaseTau || mGain < 0)
           {
-            // printf("RELEASE: Gain: %f\tState: %d\n", mGain, mCurrentState);
-            setState(idle);
+            setEnvelopeState(idle);
           }
 
           break;

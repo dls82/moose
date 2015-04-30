@@ -22,6 +22,7 @@ void MonoSynth::setSampleRate(const double sampleRate)
     {
         const ScopedLock sl(lock);
         mSampleRate = sampleRate;
+        mEnvelope.setSampleRate(sampleRate);
     }
 }
 

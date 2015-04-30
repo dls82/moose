@@ -27,15 +27,15 @@ public:
     void off();
     void processBlock(AudioSampleBuffer&, int, int);
     void setSampleRate(const double sampleRate);
-    void setState(EnvelopeStates state);
+    void setEnvelopeState(EnvelopeStates state);
 
 private:
+    EnvelopeStates mCurrentState;
     double mSampleRate;
     double mGain;
     double mOffsetGain;
-    EnvelopeStates mCurrentState;
-    int mBlocksSeen;
     double mClock;
+    int mBlocksSeen;
     double mAttackTau = 3.0;
     double mDecayTau = 2.0;
     double mReleaseTau = 1.0;
