@@ -36,10 +36,10 @@ private:
     double mOffsetGain;
     double mClock;
     int mBlocksSeen;
-    double mAttackTau = 3.0;
-    double mDecayTau = 2.0;
-    double mReleaseTau = 1.0;
-    double mSustainGain = 0.25;
+    double mAttackTau;
+    double mDecayTau;
+    double mReleaseTau;
+    double mSustainGain;
 };
 
 #endif  // ENVELOPE_H_INCLUDED

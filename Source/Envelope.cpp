@@ -10,6 +10,10 @@ Envelope::Envelope()
     mClock = 0;
     mBlocksSeen = 0;
     mCurrentState = idle;
+    mAttackTau = 3.0;
+    mDecayTau = 2.0;
+    mReleaseTau = 1.0;
+    mSustainGain = 0.25;
 }
 
 //==============================================================================
@@ -66,8 +70,9 @@ void Envelope::processBlock(AudioSampleBuffer& buffer, int currentIndex, int num
 
     for(int i = currentIndex; i < numSamples; i++)
     {
-      if (mCurrentState != sustain) {
-        mClock = (i + numSamples * mBlocksSeen) / mSampleRate;
+      mClock = (i + numSamples * mBlocksSeen) / mSampleRate;
+      if (i == numSamples - 1) {
+        mBlocksSeen += 1;
       }
 
       switch (mCurrentState) {
@@ -112,10 +117,6 @@ void Envelope::processBlock(AudioSampleBuffer& buffer, int currentIndex, int num
           }
 
           break;
-      }
-
-      if (i == numSamples - 1) {
-        mBlocksSeen += 1;
       }
     }
   }
