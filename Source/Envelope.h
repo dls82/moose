@@ -32,10 +32,10 @@ public:
 private:
     EnvelopeStates mCurrentState;
     double mSampleRate;
-    double mGain;
-    double mOffsetGain;
     double mClock;
     int mBlocksSeen;
+    double mGain;
+    double mOffsetGain;
     double mAttackTau;
     double mDecayTau;
     double mReleaseTau;

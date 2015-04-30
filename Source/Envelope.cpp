@@ -53,9 +53,24 @@ void Envelope::off()
 }
 
 //==============================================================================
+inline double approxExp(double x) {
+  x = 1.0 + x / 1024;
+  x *= x; x *= x; x *= x; x *= x;
+  x *= x; x *= x; x *= x; x *= x;
+  x *= x; x *= x;
+  return x;
+}
+
+inline double fast_exp(double y) {
+  double d;
+  *((int*)(&d) + 0) = 0;
+  *((int*)(&d) + 1) = (int)(1512775 * y + 1072632447);
+  return d;
+}
+//==============================================================================
 void Envelope::processBlock(AudioSampleBuffer& buffer, int currentIndex, int numSamples)
 {
-  // ofstream gainFile("/home/andrewrynhard/Desktop/gain.txt", ofstream::out | ofstream::app);
+  //  ofstream gainFile("/home/andrewrynhard/Desktop/gain.txt", ofstream::out | ofstream::app);
   //  if (gainFile.is_open())
   //  {
   //    gainFile << mGain;
@@ -84,7 +99,7 @@ void Envelope::processBlock(AudioSampleBuffer& buffer, int currentIndex, int num
 
           break;
         case attack:
-          mGain = 1 - exp(-mClock/(mAttackTau));
+          mGain = 1 - fast_exp(-mClock/mAttackTau);
           channelData[i] *= mGain;
 
           if (mClock >= 5 * mAttackTau)
@@ -94,7 +109,7 @@ void Envelope::processBlock(AudioSampleBuffer& buffer, int currentIndex, int num
 
           break;
         case decay:
-          mGain = mOffsetGain * exp(-mClock/(mDecayTau));
+          mGain = (mOffsetGain - mSustainGain) * fast_exp(-mClock/mDecayTau) + mSustainGain;
           channelData[i] *= mGain;
 
           if (mClock >= 5 * mDecayTau || mGain < mSustainGain)
@@ -108,7 +123,7 @@ void Envelope::processBlock(AudioSampleBuffer& buffer, int currentIndex, int num
 
           break;
         case release:
-          mGain = mOffsetGain * exp(-mClock/(mReleaseTau));
+          mGain = mOffsetGain * fast_exp(-mClock/mReleaseTau);
           channelData[i] *= mGain;
 
           if (mClock >= 5 * mReleaseTau || mGain < 0)
