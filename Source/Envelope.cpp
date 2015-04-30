@@ -95,26 +95,33 @@ void Envelope::processBlock(AudioSampleBuffer& buffer, int currentIndex, int num
           if (mGain != 0) {
             mGain = 0;
           }
+
           channelData[i] *= mGain;
 
           break;
         case attack:
           mGain = 1 - fast_exp(-mClock/mAttackTau);
-          channelData[i] *= mGain;
 
           if (mClock >= 5 * mAttackTau)
           {
             setEnvelopeState(decay);
           }
+          else
+          {
+            channelData[i] *= mGain;
+          }
 
           break;
         case decay:
           mGain = (mOffsetGain - mSustainGain) * fast_exp(-mClock/mDecayTau) + mSustainGain;
-          channelData[i] *= mGain;
 
           if (mClock >= 5 * mDecayTau || mGain < mSustainGain)
           {
             setEnvelopeState(sustain);
+          }
+          else
+          {
+            channelData[i] *= mGain;
           }
 
           break;
@@ -124,11 +131,14 @@ void Envelope::processBlock(AudioSampleBuffer& buffer, int currentIndex, int num
           break;
         case release:
           mGain = mOffsetGain * fast_exp(-mClock/mReleaseTau);
-          channelData[i] *= mGain;
 
-          if (mClock >= 5 * mReleaseTau || mGain < 0)
+          if (mGain < 0)
           {
             setEnvelopeState(idle);
+          }
+          else
+          {
+            channelData[i] *= mGain;
           }
 
           break;

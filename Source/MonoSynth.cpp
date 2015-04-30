@@ -48,12 +48,6 @@ void MonoSynth::processBlock(AudioSampleBuffer& buffer, MidiBuffer& midiMessages
                 && midiEventPos < startSample + numSamples;
         const int numThisTime = useEvent ? midiEventPos - startSample : numSamples;
 
-        // render up to the next event (or end of buffer) using current state
-        if (numThisTime > 0) {
-            oscillate(buffer, startSample, numThisTime);
-            mEnvelope.processBlock(buffer, startSample, numThisTime);
-        }
-
         // update state based on next event (if it exists)
         if (useEvent)
         {
@@ -72,6 +66,12 @@ void MonoSynth::processBlock(AudioSampleBuffer& buffer, MidiBuffer& midiMessages
                 else
                     mNoteCurrent = mNoteList.back();
             }
+        }
+
+        // render up to the next event (or end of buffer) using current state
+        if (numThisTime > 0) {
+            oscillate(buffer, startSample, numThisTime);
+            mEnvelope.processBlock(buffer, startSample, numThisTime);
         }
 
         startSample += numThisTime;
