@@ -1,15 +1,10 @@
 #include "Envelope.h"
-#include <iostream>
 #include <fstream>
-using namespace std;
 
 //==============================================================================
 Envelope::Envelope()
 {
-    mGain = 0;
-    mClock = 0;
-    mBlocksSeen = 0;
-    mCurrentState = idle;
+    setEnvelopeState(idle)
 }
 
 //==============================================================================
@@ -96,8 +91,8 @@ void Envelope::processBlock(AudioSampleBuffer& buffer, int currentIndex, int num
         mBlocksSeen += 1;
       }
 
-      if (mGain != 0 && recordData) {
-        ofstream gainFile("/home/andrewrynhard/Desktop/data.txt", ofstream::out | ofstream::app);
+      if (recordData) {
+        std::ofstream gainFile("/home/andrewrynhard/Desktop/data.txt", std::ofstream::out | std::ofstream::app);
         if (gainFile.is_open())
         {
             gainFile << mGain ;
@@ -108,7 +103,7 @@ void Envelope::processBlock(AudioSampleBuffer& buffer, int currentIndex, int num
         }
         else
         {
-          cout << "Unable to open file";
+          std::cout << "Unable to open file";
         }
       }
 
