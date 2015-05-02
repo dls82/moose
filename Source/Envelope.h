@@ -22,12 +22,24 @@ public:
     Envelope();
     ~Envelope();
 
+    struct Parameters
+    {
+      double attackParam;
+      double decayParam;
+      double sustainParam;
+      double releaseParam;
+    } mParameters;
+
     //==============================================================================
     void on();
     void off();
     void processBlock(AudioSampleBuffer&, int, int);
     void setSampleRate(const double sampleRate);
     void setEnvelopeState(EnvelopeStates state);
+    void setAttackParam(double);
+    void setDecayParam(double);
+    void setSustainParam(double);
+    void setReleaseParam(double);
 
 private:
     EnvelopeStates mCurrentState;
@@ -36,10 +48,6 @@ private:
     int mBlocksSeen;
     double mGain;
     double mOffsetGain;
-    double mAttackTau;
-    double mDecayTau;
-    double mReleaseTau;
-    double mSustainGain;
 };
 
 #endif  // ENVELOPE_H_INCLUDED

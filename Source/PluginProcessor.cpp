@@ -122,6 +122,23 @@ void MooseAudioProcessor::changeProgramName (int index, const String& newName)
 {
 }
 
+void MooseAudioProcessor::setAttackParam(double param)
+{
+    mMonoSynth.setAttackParam(param);
+}
+void MooseAudioProcessor::setDecayParam(double param)
+{
+    mMonoSynth.setDecayParam(param);
+}
+void MooseAudioProcessor::setSustainParam(double param)
+{
+    mMonoSynth.setSustainParam(param);
+}
+void MooseAudioProcessor::setReleaseParam(double param)
+{
+    mMonoSynth.setReleaseParam(param);
+}
+
 //==============================================================================
 void MooseAudioProcessor::prepareToPlay (double sampleRate, int /**samplesPerBlock*/)
 {

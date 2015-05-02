@@ -25,6 +25,11 @@ public:
     MooseAudioProcessor();
     ~MooseAudioProcessor();
 
+    void setAttackParam(double);
+    void setDecayParam(double);
+    void setSustainParam(double);
+    void setReleaseParam(double);
+
     //==============================================================================
     void prepareToPlay(double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;

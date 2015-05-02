@@ -18,7 +18,7 @@
 //==============================================================================
 /**
 */
-class MooseAudioProcessorEditor  : public AudioProcessorEditor
+class MooseAudioProcessorEditor  : public AudioProcessorEditor, public SliderListener
 {
 public:
     MooseAudioProcessorEditor (MooseAudioProcessor&);
@@ -27,11 +27,16 @@ public:
     //==============================================================================
     void paint (Graphics&) override;
     void resized() override;
+    void sliderValueChanged (Slider*) override;
 
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     MooseAudioProcessor& processor;
+
+    Label attackSliderLabel, decaySliderLabel, releaseSliderLabel, sustainSliderLabel;
+
+    Slider attackSlider, decaySlider, releaseSlider, sustainSlider;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MooseAudioProcessorEditor)
 };

@@ -22,6 +22,10 @@ public:
     //==============================================================================
     void setSampleRate(const double);
     void processBlock(AudioSampleBuffer&, MidiBuffer&);
+    void setAttackParam(double);
+    void setDecayParam(double);
+    void setSustainParam(double);
+    void setReleaseParam(double);
 
 protected:
     //==============================================================================

@@ -19,6 +19,48 @@ MooseAudioProcessorEditor::MooseAudioProcessorEditor (MooseAudioProcessor& p)
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (400, 300);
+
+    attackSlider.setSliderStyle (Slider::Rotary);
+    attackSlider.addListener (this);
+    attackSlider.setRange(0.0, 5, 0.001);
+    attackSlider.setValue(1.0);
+    attackSlider.setTextBoxStyle (Slider::NoTextBox, false, 90, 0);
+    attackSlider.setPopupDisplayEnabled (true, this);
+    attackSliderLabel.setText ("Attack:", dontSendNotification);
+
+
+    decaySlider.setSliderStyle (Slider::Rotary);
+    decaySlider.addListener (this);
+    decaySlider.setRange(0.0, 5, 0.001);
+    decaySlider.setValue(1.0);
+    decaySlider.setTextBoxStyle (Slider::NoTextBox, false, 90, 0);
+    decaySlider.setPopupDisplayEnabled (true, this);
+    decaySliderLabel.setText ("Decay:", dontSendNotification);
+
+    sustainSlider.setSliderStyle (Slider::Rotary);
+    sustainSlider.addListener (this);
+    sustainSlider.setRange(0.0, 1, 0.001);
+    sustainSlider.setValue(0.5);
+    sustainSlider.setTextBoxStyle (Slider::NoTextBox, false, 90, 0);
+    sustainSlider.setPopupDisplayEnabled (true, this);
+    sustainSliderLabel.setText ("Sustain:", dontSendNotification);
+
+    releaseSlider.setSliderStyle (Slider::Rotary);
+    releaseSlider.addListener (this);
+    releaseSlider.setRange(0.0, 5, 0.001);
+    releaseSlider.setValue(1.0);
+    releaseSlider.setTextBoxStyle (Slider::NoTextBox, false, 90, 0);
+    releaseSlider.setPopupDisplayEnabled (true, this);
+    releaseSliderLabel.setText ("Release:", dontSendNotification);
+
+    addAndMakeVisible (&attackSlider);
+    addAndMakeVisible (&attackSliderLabel);
+    addAndMakeVisible (&decaySlider);
+    addAndMakeVisible (&decaySliderLabel);
+    addAndMakeVisible (&releaseSlider);
+    addAndMakeVisible (&releaseSliderLabel);
+    addAndMakeVisible (&sustainSlider);
+    addAndMakeVisible (&sustainSliderLabel);
 }
 
 MooseAudioProcessorEditor::~MooseAudioProcessorEditor()
@@ -32,11 +74,44 @@ void MooseAudioProcessorEditor::paint (Graphics& g)
 
     g.setColour (Colours::black);
     g.setFont (15.0f);
-    g.drawFittedText ("Hello World!", getLocalBounds(), Justification::centred, 1);
+    g.drawFittedText ("MOOSE", getLocalBounds(), Justification::centred, 1);
 }
 
 void MooseAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
+
+    attackSlider.setBounds (10, 30, 50, 50);
+    decaySlider.setBounds (60, 30, 50, 50);
+    sustainSlider.setBounds (110, 30, 50, 50);
+    releaseSlider.setBounds (160, 30, 50, 50);
+    attackSliderLabel.setBounds (10, 0.5, 50, 50);
+    decaySliderLabel.setBounds (60, 0.5, 50, 50);
+    sustainSliderLabel.setBounds (110, 0.5, 50, 50);
+    releaseSliderLabel.setBounds (160, 0.5, 50, 50);
+}
+
+void MooseAudioProcessorEditor::sliderValueChanged (Slider* slider)
+{
+    if (slider == &attackSlider)
+    {
+      const double paramValue = attackSlider.getValue();
+      processor.setAttackParam(paramValue);
+    }
+    else if (slider == &decaySlider)
+    {
+      const double paramValue = decaySlider.getValue();
+      processor.setDecayParam(paramValue);
+    }
+    else if (slider == &sustainSlider)
+    {
+      const double paramValue = sustainSlider.getValue();
+      processor.setSustainParam(paramValue);
+    }
+    else if (slider == &releaseSlider)
+    {
+      const double paramValue = releaseSlider.getValue();
+      processor.setReleaseParam(paramValue);
+    }
 }

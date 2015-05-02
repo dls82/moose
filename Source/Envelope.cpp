@@ -1,7 +1,7 @@
 #include "Envelope.h"
-// #include <iostream>
-// #include <fstream>
-// using namespace std;
+#include <iostream>
+#include <fstream>
+using namespace std;
 
 //==============================================================================
 Envelope::Envelope()
@@ -10,10 +10,6 @@ Envelope::Envelope()
     mClock = 0;
     mBlocksSeen = 0;
     mCurrentState = idle;
-    mAttackTau = 3.0;
-    mDecayTau = 2.0;
-    mReleaseTau = 1.0;
-    mSustainGain = 0.25;
 }
 
 //==============================================================================
@@ -67,18 +63,28 @@ inline double fast_exp(double y) {
   *((int*)(&d) + 1) = (int)(1512775 * y + 1072632447);
   return d;
 }
+
+void Envelope::setAttackParam(double param)
+{
+  mParameters.attackParam = param;
+}
+void Envelope::setDecayParam(double param)
+{
+  mParameters.decayParam = param;
+}
+void Envelope::setSustainParam(double param)
+{
+  mParameters.sustainParam = param;
+}
+void Envelope::setReleaseParam(double param)
+{
+  mParameters.releaseParam = param;
+}
+
+bool recordData = true;
 //==============================================================================
 void Envelope::processBlock(AudioSampleBuffer& buffer, int currentIndex, int numSamples)
 {
-  //  ofstream gainFile("/home/andrewrynhard/Desktop/gain.txt", ofstream::out | ofstream::app);
-  //  if (gainFile.is_open())
-  //  {
-  //    gainFile << mGain;
-  //    gainFile << ",\n";
-  //    gainFile.close();
-  //  }
-  //  else cout << "Unable to open file";
-
   for(int channel = buffer.getNumChannels(); --channel >= 0;)
   {
     float* channelData = buffer.getWritePointer(channel);
@@ -88,6 +94,22 @@ void Envelope::processBlock(AudioSampleBuffer& buffer, int currentIndex, int num
       mClock = (i + numSamples * mBlocksSeen) / mSampleRate;
       if (i == numSamples - 1) {
         mBlocksSeen += 1;
+      }
+
+      if (mGain != 0 && recordData) {
+        ofstream gainFile("/home/andrewrynhard/Desktop/data.txt", ofstream::out | ofstream::app);
+        if (gainFile.is_open())
+        {
+            gainFile << mGain ;
+            gainFile << "\t";
+            gainFile << channelData[i];
+            gainFile << "\n";
+            gainFile.close();
+        }
+        else
+        {
+          cout << "Unable to open file";
+        }
       }
 
       switch (mCurrentState) {
@@ -100,9 +122,9 @@ void Envelope::processBlock(AudioSampleBuffer& buffer, int currentIndex, int num
 
           break;
         case attack:
-          mGain = 1 - fast_exp(-mClock/mAttackTau);
+          mGain = 1 - exp(-mClock/mParameters.attackParam);
 
-          if (mClock >= 5 * mAttackTau)
+          if (mClock >= 5 * mParameters.attackParam)
           {
             setEnvelopeState(decay);
           }
@@ -113,9 +135,9 @@ void Envelope::processBlock(AudioSampleBuffer& buffer, int currentIndex, int num
 
           break;
         case decay:
-          mGain = (mOffsetGain - mSustainGain) * fast_exp(-mClock/mDecayTau) + mSustainGain;
+          mGain = (mOffsetGain - mParameters.sustainParam) * exp(-mClock/mParameters.decayParam) + mParameters.sustainParam;
 
-          if (mClock >= 5 * mDecayTau || mGain < mSustainGain)
+          if (mClock >= 5 * mParameters.decayParam || mGain < mParameters.sustainParam)
           {
             setEnvelopeState(sustain);
           }
@@ -130,7 +152,7 @@ void Envelope::processBlock(AudioSampleBuffer& buffer, int currentIndex, int num
 
           break;
         case release:
-          mGain = mOffsetGain * fast_exp(-mClock/mReleaseTau);
+          mGain = mOffsetGain * exp(-mClock/mParameters.releaseParam);
 
           if (mGain < 0)
           {
