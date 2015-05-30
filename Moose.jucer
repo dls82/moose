@@ -41,8 +41,6 @@
         <MODULEPATH id="juce_data_structures" path="../JUCE-OSX/modules"/>
         <MODULEPATH id="juce_gui_basics" path="../JUCE-OSX/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../JUCE-OSX/modules"/>
-        <MODULEPATH id="juce_cryptography" path="../JUCE-OSX/modules"/>
-        <MODULEPATH id="juce_video" path="../JUCE-OSX/modules"/>
         <MODULEPATH id="juce_opengl" path="../JUCE-OSX/modules"/>
         <MODULEPATH id="juce_audio_basics" path="../JUCE-OSX/modules"/>
         <MODULEPATH id="juce_audio_devices" path="../JUCE-OSX/modules"/>
@@ -60,14 +58,12 @@
                        targetName="Moose" headerPath="/usr/include/freetype2"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="/home/derek/Documents/JUCE-LINUX/modules"/>
         <MODULEPATH id="juce_opengl" path="/home/derek/Documents/JUCE-LINUX/modules"/>
         <MODULEPATH id="juce_gui_extra" path="/home/derek/Documents/JUCE-LINUX/modules"/>
         <MODULEPATH id="juce_gui_basics" path="/home/derek/Documents/JUCE-LINUX/modules"/>
         <MODULEPATH id="juce_graphics" path="/home/derek/Documents/JUCE-LINUX/modules"/>
         <MODULEPATH id="juce_events" path="/home/derek/Documents/JUCE-LINUX/modules"/>
         <MODULEPATH id="juce_data_structures" path="/home/derek/Documents/JUCE-LINUX/modules"/>
-        <MODULEPATH id="juce_cryptography" path="/home/derek/Documents/JUCE-LINUX/modules"/>
         <MODULEPATH id="juce_core" path="/home/derek/Documents/JUCE-LINUX/modules"/>
         <MODULEPATH id="juce_audio_processors" path="/home/derek/Documents/JUCE-LINUX/modules"/>
         <MODULEPATH id="juce_audio_plugin_client" path="/home/derek/Documents/JUCE-LINUX/modules"/>
@@ -85,14 +81,12 @@
                        headerPath="/usr/include/freetype2&#10;/home/derek/Documents/VST3"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="../../juce"/>
         <MODULEPATH id="juce_opengl" path="../../juce"/>
         <MODULEPATH id="juce_gui_extra" path="../../juce"/>
         <MODULEPATH id="juce_gui_basics" path="../../juce"/>
         <MODULEPATH id="juce_graphics" path="../../juce"/>
         <MODULEPATH id="juce_events" path="../../juce"/>
         <MODULEPATH id="juce_data_structures" path="../../juce"/>
-        <MODULEPATH id="juce_cryptography" path="../../juce"/>
         <MODULEPATH id="juce_core" path="../../juce"/>
         <MODULEPATH id="juce_audio_processors" path="../../juce"/>
         <MODULEPATH id="juce_audio_plugin_client" path="../../juce"/>
@@ -109,14 +103,12 @@
     <MODULES id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="1"/>
     <MODULES id="juce_audio_processors" showAllCode="1" useLocalCopy="1"/>
     <MODULES id="juce_core" showAllCode="1" useLocalCopy="1"/>
-    <MODULES id="juce_cryptography" showAllCode="1" useLocalCopy="1"/>
     <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="1"/>
     <MODULES id="juce_events" showAllCode="1" useLocalCopy="1"/>
     <MODULES id="juce_graphics" showAllCode="1" useLocalCopy="1"/>
     <MODULES id="juce_gui_basics" showAllCode="1" useLocalCopy="1"/>
     <MODULES id="juce_gui_extra" showAllCode="1" useLocalCopy="1"/>
     <MODULES id="juce_opengl" showAllCode="1" useLocalCopy="1"/>
-    <MODULES id="juce_video" showAllCode="1" useLocalCopy="1"/>
   </MODULES>
   <JUCEOPTIONS JUCE_QUICKTIME="disabled"/>
 </JUCERPROJECT>
