@@ -1,5 +1,14 @@
 # moose
 
+Testing
+=======
+
+Using the [Catch unit test framework](https://github.com/philsquared/Catch). There are two options for testing our plug-in code:
+
+1. Include test code in the built shared library. Create an executable project which loads the library and runs tests.
+2. Don't include test code in the library project. Create an executable project which contains all source code and tests, and which runs tests.
+
+Went with second option; unsure how to implement first one. Thus there are two IntroJucer projects; Moose and MooseTest. The Moose.jucer file creates project for building the plug-in and does not include testing code. The MooseTest.jucer file creates project for building an executable which runs tests. Therefore, switching between testing and building the plug-in requires running the IntroJucer, as the file ~/JuceLibraryCode/AppConfig.h is significantly different when building a shared library vs. an executable.
 
 
 Ubuntu Setup
@@ -13,12 +22,12 @@ sudo apt-get -y install g++ libfreetype6-dev libx11-dev libxinerama-dev libxcurs
 
 Ubuntu seems to [put freetype headers in an unexpected location](http://stackoverflow.com/questions/21213380/cannot-include-freetype-headers-on-linux). Therefore projects must include path /usr/include/freetype2.
 
-The IntroJucer doesn't play nice with environment variables. After checking out code, open the Moose.juce file and change the following in "Linux Makefile" target.
+The IntroJucer doesn't play nice with environment variables, otherwise we wouldn't have to hard-code header location of libraries. After checking out code, open the Moose.juce file and change the following in "Linux Makefile" target.
 
 1. JuceLibraryCode/modules
 2. VST
 
-The IntroJucer only produces Code::Blocks files suitable for Windows. Here are a number of issues which produce working Linux project files.
+The IntroJucer only produces Code::Blocks files suitable for Windows. Here are steps which produce working Linux project files.
 
 1. Add -fPIC compiler flag.
 2. Define LINUX=1.
