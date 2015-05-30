@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="ZV0niw" name="MooseTest" projectType="consoleapp" version="1.0.0"
+              bundleIdentifier="com.yourcompany.MooseTest" includeBinaryInAppConfig="1"
+              jucerVersion="3.1.0">
+  <MAINGROUP id="IDJtSq" name="MooseTest">
+    <GROUP id="{08C110FB-F459-3526-93CC-6EC2DDF4062A}" name="Source">
+      <FILE id="p5A5q5" name="Envelope.cpp" compile="1" resource="0" file="Source/Envelope.cpp"/>
+      <FILE id="UgTEX0" name="Envelope.h" compile="0" resource="0" file="Source/Envelope.h"/>
+      <FILE id="pMv2h0" name="MonoSynth.cpp" compile="1" resource="0" file="Source/MonoSynth.cpp"/>
+      <FILE id="PYH4N2" name="MonoSynth.h" compile="0" resource="0" file="Source/MonoSynth.h"/>
+      <FILE id="WWEDDY" name="Tests.cpp" compile="1" resource="0" file="Source/Tests.cpp"/>
+      <FILE id="KIxzAn" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+    </GROUP>
+  </MAINGROUP>
+  <EXPORTFORMATS>
+    <LINUX_MAKE targetFolder="Builds/Linux">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" libraryPath="/usr/X11R6/lib/" isDebug="1" optimisation="1"
+                       targetName="MooseTest"/>
+        <CONFIGURATION name="Release" libraryPath="/usr/X11R6/lib/" isDebug="0" optimisation="2"
+                       targetName="MooseTest"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_events" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_graphics" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_data_structures" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_cryptography" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_video" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_opengl" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+      </MODULEPATHS>
+    </LINUX_MAKE>
+    <CODEBLOCKS targetFolder="Builds/CodeBlocks" extraDefs="LINUX=1" extraCompilerFlags="-fPIC">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="MooseTest"
+                       headerPath="/usr/include/freetype2&#10;/home/derek/Documents/VST3"/>
+        <CONFIGURATION name="Release" isDebug="0" optimisation="2" targetName="MooseTest"
+                       headerPath="/usr/include/freetype2&#10;/home/derek/Documents/VST3"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_events" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_graphics" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_data_structures" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_cryptography" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_video" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_opengl" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="/home/derek/Documents/JUCE-LINUX/modules"/>
+      </MODULEPATHS>
+    </CODEBLOCKS>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULES id="juce_audio_basics" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_devices" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_formats" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_processors" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_core" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_cryptography" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_events" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_graphics" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_gui_basics" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_gui_extra" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_opengl" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_video" showAllCode="1" useLocalCopy="1"/>
+  </MODULES>
+  <JUCEOPTIONS/>
+</JUCERPROJECT>
