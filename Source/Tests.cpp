@@ -2,6 +2,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 
 #include "MonoSynth.h"
+#include "LowPass.h"
 
 TEST_CASE( "basic envelope check", "[monosynth]" ) {
     const int sampleRate = 44100;
@@ -30,3 +31,16 @@ TEST_CASE( "basic envelope check", "[monosynth]" ) {
     writer->writeFromAudioSampleBuffer(audio,0,audio.getNumSamples());
     delete writer;
 }
+
+// http://dsp.stackexchange.com/questions/20221/question-regarding-filter-implementation-audio-eq-cookbook
+TEST_CASE( "low pass impulse", "[lowpass]" ) {
+    // create impulse
+    AudioSampleBuffer audio(1,100);
+    audio.clear();
+    audio.addSample(0, 0, 1);
+
+    LowPass lowpass;
+    lowpass.setSampleRate(48000);
+    lowpass.setState(5355, 1);
+}
+

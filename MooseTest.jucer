@@ -5,6 +5,8 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="IDJtSq" name="MooseTest">
     <GROUP id="{08C110FB-F459-3526-93CC-6EC2DDF4062A}" name="Source">
+      <FILE id="Ore9wl" name="LowPass.cpp" compile="1" resource="0" file="Source/LowPass.cpp"/>
+      <FILE id="V7oyC4" name="LowPass.h" compile="0" resource="0" file="Source/LowPass.h"/>
       <FILE id="p5A5q5" name="Envelope.cpp" compile="1" resource="0" file="Source/Envelope.cpp"/>
       <FILE id="UgTEX0" name="Envelope.h" compile="0" resource="0" file="Source/Envelope.h"/>
       <FILE id="pMv2h0" name="MonoSynth.cpp" compile="1" resource="0" file="Source/MonoSynth.cpp"/>
