@@ -4,8 +4,6 @@
 #include <list>
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include <modules/juce_audio_basics/buffers/juce_AudioSampleBuffer.h>
-#include <modules/juce_audio_basics/midi/juce_MidiBuffer.h>
 
 #include "Envelope.h"
 

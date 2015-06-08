@@ -1,7 +1,5 @@
 #include "MonoSynth.h"
 
-#include <modules/juce_audio_basics/midi/juce_MidiMessage.h>
-
 //==============================================================================
 MonoSynth::MonoSynth()
 {

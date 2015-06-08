@@ -2,7 +2,6 @@
 #define ENVELOPE_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include <modules/juce_audio_basics/buffers/juce_AudioSampleBuffer.h>
 
 //==============================================================================
 /**
