@@ -43,17 +43,17 @@ void LowPass::setState(const double fc, const double q)
 //==============================================================================
 void LowPass::processBlock(AudioSampleBuffer& buffer, int currentIndex, int numSamples)
 {
-    // what if... buffer length <= 2? or if setState() called while in processBlock()?
-
-    // idiom for looping over buffer
-    while (--numSamples >= 0)
+    while(--numSamples >= 0)
     {
-        for (int i = buffer.getNumChannels(); --i >= 0;)
+        for(int i = buffer.getNumChannels(); --i >= 0;)
         {
-            // do stuff
-            const double y0 = 0;
-            audio.getSample(0,startSample)
+            const double x0 = buffer.getSample(i,currentIndex);
+			const double y0 = (b0*x0+b1*x1+b2*x2-a1*y1-a2*y2)/a0;
             buffer.addSample(i, currentIndex, y0);
+			y2=y1;
+			y1=y0;
+			x2=x1;
+			x1=x0;
         }
         ++currentIndex;
     }

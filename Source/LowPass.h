@@ -21,7 +21,7 @@ public:
 private:
     //==============================================================================
     double a0,a1,a2,b0,b1,b2;
-    double y1,y2;
+    double x1,x2,y1,y2;
     double mFreqCutoff, mQ;
     double mSampleRate;
 };

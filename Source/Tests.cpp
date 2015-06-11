@@ -4,6 +4,8 @@
 #include "MonoSynth.h"
 #include "LowPass.h"
 
+#include <cmath>
+
 TEST_CASE( "basic envelope check", "[monosynth]" ) {
     const int sampleRate = 44100;
     const int startSample = 1000;
@@ -33,14 +35,23 @@ TEST_CASE( "basic envelope check", "[monosynth]" ) {
 }
 
 // http://dsp.stackexchange.com/questions/20221/question-regarding-filter-implementation-audio-eq-cookbook
-TEST_CASE( "low pass impulse", "[lowpass]" ) {
+TEST_CASE( "impulse response", "[lowpass]" ) {
     // create impulse
-    AudioSampleBuffer audio(1,100);
+    AudioSampleBuffer audio(1,50);
     audio.clear();
     audio.addSample(0, 0, 1);
 
     LowPass lowpass;
     lowpass.setSampleRate(48000);
     lowpass.setState(5355, 1);
+
+	lowpass.processBlock(audio,0,10);
+	lowpass.processBlock(audio,10,10);
+	lowpass.processBlock(audio,20,10);
+	lowpass.processBlock(audio,30,10);
+	lowpass.processBlock(audio,40,10);
+	REQUIRE(abs(audio.getSample(0,1)-0.281314433) <= 0.000001);
+	REQUIRE(abs(audio.getSample(0,10)+0.0022121917) <= 0.000001);
+	REQUIRE(abs(audio.getSample(0,24)-0.000159396572) <= 0.000001);
 }
 
