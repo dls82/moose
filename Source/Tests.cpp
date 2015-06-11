@@ -45,13 +45,13 @@ TEST_CASE( "impulse response", "[lowpass]" ) {
     lowpass.setSampleRate(48000);
     lowpass.setState(5355, 1);
 
-	lowpass.processBlock(audio,0,10);
-	lowpass.processBlock(audio,10,10);
-	lowpass.processBlock(audio,20,10);
-	lowpass.processBlock(audio,30,10);
-	lowpass.processBlock(audio,40,10);
-	REQUIRE(abs(audio.getSample(0,1)-0.281314433) <= 0.000001);
-	REQUIRE(abs(audio.getSample(0,10)+0.0022121917) <= 0.000001);
-	REQUIRE(abs(audio.getSample(0,24)-0.000159396572) <= 0.000001);
+    lowpass.processBlock(audio,0,10);
+    lowpass.processBlock(audio,10,10);
+    lowpass.processBlock(audio,20,10);
+    lowpass.processBlock(audio,30,10);
+    lowpass.processBlock(audio,40,10);
+    REQUIRE(abs(audio.getSample(0,1)-0.281314433) <= 0.000001);
+    REQUIRE(abs(audio.getSample(0,10)+0.0022121917) <= 0.000001);
+    REQUIRE(abs(audio.getSample(0,24)-0.000159396572) <= 0.000001);
 }
 
