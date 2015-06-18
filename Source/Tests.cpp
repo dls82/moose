@@ -41,9 +41,7 @@ TEST_CASE( "impulse response", "[lowpass]" ) {
     audio.clear();
     audio.addSample(0, 0, 1);
 
-    LowPass lowpass;
-    lowpass.setSampleRate(48000);
-    lowpass.setState(5355, 1);
+    LowPass lowpass(1,48000,5355,1);
 
     lowpass.processBlock(audio,0,10);
     lowpass.processBlock(audio,10,10);
@@ -54,4 +52,3 @@ TEST_CASE( "impulse response", "[lowpass]" ) {
     REQUIRE(abs(audio.getSample(0,10)+0.0022121917) <= 0.000001);
     REQUIRE(abs(audio.getSample(0,24)-0.000159396572) <= 0.000001);
 }
-
