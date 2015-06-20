@@ -6,6 +6,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 
 #include "Envelope.h"
+#include "Oscillator.h"
 
 //==============================================================================
 /**
@@ -28,14 +29,10 @@ protected:
 
 private:
     //==============================================================================
-    void oscillate(AudioSampleBuffer&, int, int);
-
-    //==============================================================================
-    double mSampleRate;
-    double mCurrentAngle;
-    int mNoteCurrent;
+    int mSampleRate;
     std::list<int> mNoteList;
     Envelope mEnvelope;
+    Oscillator mOscillator;
 };
 
 #endif  // MONOSYNTH_H_INCLUDED

@@ -5,7 +5,7 @@
 // http://www.musicdsp.org/files/Audio-EQ-Cookbook.txt
 
 //==============================================================================
-LowPass::LowPass(const int numChannels, const double sampleRate,
+LowPass::LowPass(const int numChannels, const int sampleRate,
     const double fc, const double q)
 {
     x1.resize(numChannels);
@@ -34,6 +34,7 @@ LowPass::LowPass(const int numChannels, const double sampleRate,
 LowPass::~LowPass()
 {
 }
+
 //==============================================================================
 void LowPass::processBlock(AudioSampleBuffer& buffer, int currentIndex, int numSamples)
 {

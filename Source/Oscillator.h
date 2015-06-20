@@ -1,26 +1,25 @@
-#ifndef LOWPASS_H_INCLUDED
-#define LOWPASS_H_INCLUDED
+#ifndef OSCILLATOR_H_INCLUDED
+#define OSCILLATOR_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-#include <vector>
-
-class LowPass
+class Oscillator
 {
 public:
     //==============================================================================
-    LowPass(const int, const int, const double, const double);
-    ~LowPass();
+    Oscillator();
+    ~Oscillator();
 
     //==============================================================================
+    void note(int);
     void processBlock(AudioSampleBuffer&, int, int);
+    void setSampleRate(int);
 
 private:
     //==============================================================================
-    double a0,a1,a2,b0,b1,b2;
-    std::vector<double> x1,x2,y1,y2;
-    double mFreqCutoff, mQ;
     int mSampleRate;
+    int mCurrentNote;
+    double mCurrentAngle;
 };
 
-#endif  // LOWPASS_H_INCLUDED
+#endif  // OSCILLATOR_H_INCLUDED

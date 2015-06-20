@@ -3,6 +3,7 @@
 
 #include "MonoSynth.h"
 #include "LowPass.h"
+#include "Oscillator.h"
 
 #include <cmath>
 
@@ -55,4 +56,19 @@ TEST_CASE( "impulse response", "[lowpass]" ) {
     REQUIRE(std::abs(audio.getSample(1,2)-0.281314433) < 0.000001);
     REQUIRE(std::abs(audio.getSample(1,11)+0.0022121917) < 0.000001);
     REQUIRE(std::abs(audio.getSample(1,25)-0.000159396572) < 0.000001);
+}
+
+TEST_CASE( "sine oscillator", "[sine]" ) {
+    AudioSampleBuffer audio(1,50);
+    audio.clear();
+
+    Oscillator oscillator;
+    oscillator.setSampleRate(48000);
+    oscillator.note(80);
+    oscillator.processBlock(audio,0,10);
+    oscillator.processBlock(audio,10,10);
+    oscillator.processBlock(audio,20,10);
+    oscillator.processBlock(audio,30,10);
+    oscillator.processBlock(audio,40,10);
+    REQUIRE(std::abs(audio.getSample(0,5)) != 0);
 }

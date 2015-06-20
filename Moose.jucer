@@ -12,6 +12,8 @@
               companyName="AlcesAlces">
   <MAINGROUP id="ZApR3d" name="Moose">
     <GROUP id="{4D8CA681-6AAA-DC07-1C23-795FF5AA4D57}" name="Source">
+      <FILE id="FIezB9" name="Oscillator.cpp" compile="1" resource="0" file="Source/Oscillator.cpp"/>
+      <FILE id="YvNTDO" name="Oscillator.h" compile="0" resource="0" file="Source/Oscillator.h"/>
       <FILE id="g0ewT4" name="LowPass.cpp" compile="1" resource="0" file="Source/LowPass.cpp"/>
       <FILE id="BQWN75" name="LowPass.h" compile="0" resource="0" file="Source/LowPass.h"/>
       <FILE id="zCfTXI" name="Envelope.cpp" compile="1" resource="0" file="Source/Envelope.cpp"/>
