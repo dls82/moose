@@ -36,12 +36,13 @@ TEST_CASE( "basic envelope check", "[monosynth]" ) {
 
 // http://dsp.stackexchange.com/questions/20221/question-regarding-filter-implementation-audio-eq-cookbook
 TEST_CASE( "impulse response", "[lowpass]" ) {
-    // create impulse
-    AudioSampleBuffer audio(1,50);
+    // create two impulse buffer, each shifted by one sample
+    AudioSampleBuffer audio(2,50);
     audio.clear();
     audio.addSample(0, 0, 1);
+    audio.addSample(1, 1, 1);
 
-    LowPass lowpass(1,48000,5355,1);
+    LowPass lowpass(2,48000,5355,1);
 
     lowpass.processBlock(audio,0,10);
     lowpass.processBlock(audio,10,10);
@@ -51,4 +52,7 @@ TEST_CASE( "impulse response", "[lowpass]" ) {
     REQUIRE(std::abs(audio.getSample(0,1)-0.281314433) < 0.000001);
     REQUIRE(std::abs(audio.getSample(0,10)+0.0022121917) < 0.000001);
     REQUIRE(std::abs(audio.getSample(0,24)-0.000159396572) < 0.000001);
+    REQUIRE(std::abs(audio.getSample(1,2)-0.281314433) < 0.000001);
+    REQUIRE(std::abs(audio.getSample(1,11)+0.0022121917) < 0.000001);
+    REQUIRE(std::abs(audio.getSample(1,25)-0.000159396572) < 0.000001);
 }
