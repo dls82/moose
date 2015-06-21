@@ -37,7 +37,7 @@ TEST_CASE( "basic envelope check", "[monosynth]" ) {
 
 // http://dsp.stackexchange.com/questions/20221/question-regarding-filter-implementation-audio-eq-cookbook
 TEST_CASE( "impulse response", "[lowpass]" ) {
-    // create two impulse buffer, each shifted by one sample
+    // two channel buffer, each impulse shifted by one sample
     AudioSampleBuffer audio(2,50);
     audio.clear();
     audio.addSample(0, 0, 1);

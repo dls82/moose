@@ -125,7 +125,9 @@ void MooseAudioProcessor::changeProgramName (int index, const String& newName)
 //==============================================================================
 void MooseAudioProcessor::prepareToPlay (double sampleRate, int /**samplesPerBlock*/)
 {
-    mMonoSynth.setSampleRate(sampleRate);
+    // Why does JUCE use 'double' for sample rate?
+    // Internally, we'll use an integer. Truncation should be fine.
+    mMonoSynth.setSampleRate((int)sampleRate);
 }
 
 void MooseAudioProcessor::releaseResources()

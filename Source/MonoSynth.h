@@ -19,7 +19,7 @@ public:
     ~MonoSynth();
 
     //==============================================================================
-    void setSampleRate(const double);
+    void setSampleRate(const int);
     void processBlock(AudioSampleBuffer&, MidiBuffer&);
 
 protected:
@@ -29,7 +29,6 @@ protected:
 
 private:
     //==============================================================================
-    int mSampleRate;
     std::list<int> mNoteList;
     Envelope mEnvelope;
     Oscillator mOscillator;

@@ -3,7 +3,6 @@
 //==============================================================================
 MonoSynth::MonoSynth()
 {
-    mSampleRate = 0;
 }
 
 //==============================================================================
@@ -12,23 +11,14 @@ MonoSynth::~MonoSynth()
 }
 
 //==============================================================================
-void MonoSynth::setSampleRate(const double sampleRate)
+void MonoSynth::setSampleRate(const int sampleRate)
 {
-    // Why does JUCE use 'double' for sample rate?
-    // Internally, we'll use an integer.
-    if (mSampleRate != (int) sampleRate)
-    {
-        const ScopedLock sl(lock);
-        mSampleRate = (int) sampleRate;
-        mOscillator.setSampleRate(mSampleRate);
-    }
+    mOscillator.setSampleRate(sampleRate);
 }
 
 //==============================================================================
 void MonoSynth::processBlock(AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
-    jassert(mSampleRate > 0);
-
     const ScopedLock sl(lock);
 
     int numSamples = buffer.getNumSamples();

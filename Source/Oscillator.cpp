@@ -37,7 +37,11 @@ void Oscillator::processBlock(AudioSampleBuffer& buffer, int currentIndex, int n
 }
 
 //==============================================================================
-void Oscillator::setSampleRate(int sampleRate)
+void Oscillator::setSampleRate(const int sampleRate)
 {
-    mSampleRate = sampleRate;
+    if (mSampleRate != sampleRate)
+    {
+        const ScopedLock sl(lock);
+        mSampleRate = sampleRate;
+    }
 }

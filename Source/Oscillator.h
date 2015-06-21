@@ -13,7 +13,12 @@ public:
     //==============================================================================
     void note(int);
     void processBlock(AudioSampleBuffer&, int, int);
-    void setSampleRate(int);
+    void setSampleRate(const int);
+
+protected:
+    //==============================================================================
+    /** This is used to control access to the rendering callback and the note trigger methods. */
+    CriticalSection lock;
 
 private:
     //==============================================================================
