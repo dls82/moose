@@ -6,6 +6,9 @@
 #include "Oscillator.h"
 
 #include <cmath>
+#include <iostream>
+
+static const double ERR_TOL = 0.000001;
 
 TEST_CASE( "basic envelope check", "[monosynth]" ) {
     const int sampleRate = 44100;
@@ -50,12 +53,12 @@ TEST_CASE( "impulse response", "[lowpass]" ) {
     lowpass.processBlock(audio,20,10);
     lowpass.processBlock(audio,30,10);
     lowpass.processBlock(audio,40,10);
-    REQUIRE(std::abs(audio.getSample(0,1)-0.281314433) < 0.000001);
-    REQUIRE(std::abs(audio.getSample(0,10)+0.0022121917) < 0.000001);
-    REQUIRE(std::abs(audio.getSample(0,24)-0.000159396572) < 0.000001);
-    REQUIRE(std::abs(audio.getSample(1,2)-0.281314433) < 0.000001);
-    REQUIRE(std::abs(audio.getSample(1,11)+0.0022121917) < 0.000001);
-    REQUIRE(std::abs(audio.getSample(1,25)-0.000159396572) < 0.000001);
+    REQUIRE(std::abs(audio.getSample(0,1)-0.281314433) < ERR_TOL);
+    REQUIRE(std::abs(audio.getSample(0,10)+0.0022121917) < ERR_TOL);
+    REQUIRE(std::abs(audio.getSample(0,24)-0.000159396572) < ERR_TOL);
+    REQUIRE(std::abs(audio.getSample(1,2)-0.281314433) < ERR_TOL);
+    REQUIRE(std::abs(audio.getSample(1,11)+0.0022121917) < ERR_TOL);
+    REQUIRE(std::abs(audio.getSample(1,25)-0.000159396572) < ERR_TOL);
 }
 
 TEST_CASE( "sine oscillator", "[sine]" ) {
@@ -70,5 +73,9 @@ TEST_CASE( "sine oscillator", "[sine]" ) {
     oscillator.processBlock(audio,20,10);
     oscillator.processBlock(audio,30,10);
     oscillator.processBlock(audio,40,10);
-    REQUIRE(std::abs(audio.getSample(0,5)) != 0);
+    REQUIRE(std::abs(audio.getSample(0,0)) < ERR_TOL);
+    REQUIRE(std::abs(audio.getSample(0,1)-0.108512424) < ERR_TOL);
+    REQUIRE(std::abs(audio.getSample(0,2)-0.215743333) < ERR_TOL);
+    REQUIRE(std::abs(audio.getSample(0,3)-0.320426375) < ERR_TOL);
+    REQUIRE(std::abs(audio.getSample(0,4)-0.421325207) < ERR_TOL);
 }
