@@ -23,8 +23,8 @@ protected:
 private:
     //==============================================================================
     int mSampleRate;
-    int mCurrentNote;
-    double mCurrentAngle;
+    int mNote;
+    int mTimer;
 };
 
 #endif  // OSCILLATOR_H_INCLUDED

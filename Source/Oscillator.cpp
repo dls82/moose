@@ -14,24 +14,25 @@ Oscillator::~Oscillator()
 void Oscillator::note(int noteNumber)
 {
     jassert(mSampleRate > 0);
-    mCurrentAngle = 0.0;
-    mCurrentNote = noteNumber;
+    mTimer = 0;
+    mNote = noteNumber;
 }
 
 //==============================================================================
 void Oscillator::processBlock(AudioSampleBuffer& buffer, int currentIndex, int numSamples)
 {
     jassert(mSampleRate > 0);
-    const double cyclesPerSecond = MidiMessage::getMidiNoteInHertz(mCurrentNote);
+    jassert(mNote > 0);
+    const double cyclesPerSecond = MidiMessage::getMidiNoteInHertz(mNote);
     const double cyclesPerSample = cyclesPerSecond / mSampleRate;
-    const double angleDelta = cyclesPerSample * 2.0 * double_Pi;
 
     while(--numSamples >= 0)
     {
-        const float currentSample = (float) (sin(mCurrentAngle));
+        const double time = mTimer * cyclesPerSecond / mSampleRate;
+        const float currentSample = (float) (sin(2.0 * double_Pi * time));
         for (int i = buffer.getNumChannels(); --i >= 0;)
             buffer.addSample(i, currentIndex, currentSample);
-        mCurrentAngle += angleDelta;
+        ++mTimer;
         ++currentIndex;
     }
 }
@@ -39,6 +40,7 @@ void Oscillator::processBlock(AudioSampleBuffer& buffer, int currentIndex, int n
 //==============================================================================
 void Oscillator::setSampleRate(const int sampleRate)
 {
+    jassert(sampleRate > 0);
     if (mSampleRate != sampleRate)
     {
         const ScopedLock sl(lock);
