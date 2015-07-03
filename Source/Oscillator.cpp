@@ -28,8 +28,36 @@ void Oscillator::processBlock(AudioSampleBuffer& buffer, int currentIndex, int n
 
     while(--numSamples >= 0)
     {
-        const double time = mTimer * cyclesPerSecond / mSampleRate;
-        const float currentSample = (float) (sin(2.0 * double_Pi * time));
+        //const double time = mTimer * cyclesPerSecond / mSampleRate;
+
+        // so sawtooth begins at zero
+        const double time = 0.25 + mTimer * cyclesPerSecond / mSampleRate;
+
+        // sine wave
+        //const float currentSample = (float) (sin(2.0 * double_Pi * time));
+
+        // sawtooth
+        //const double fracTime = time - (long)time;
+        //const float currentSample = (float) (1-(2.0 * fracTime));
+
+        // square
+        // const double fracTime = time - (long)time;
+        // float currentSample = 0.0f;
+        // if(fracTime < 0.5) {
+        //     currentSample = 1.0f;
+        // } else {
+        //     currentSample = -1.0f;
+        // }
+
+        // triangle
+        const double fracTime = time - (long)time;
+        float currentSample = 0.0f;
+        if(fracTime < 0.5) {
+            currentSample = (float) (-1.0+4.0*fracTime);
+        } else {
+            currentSample = (float) (3.0-4.0*fracTime);
+        }
+
         for (int i = buffer.getNumChannels(); --i >= 0;)
             buffer.addSample(i, currentIndex, currentSample);
         ++mTimer;
