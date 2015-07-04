@@ -8,6 +8,8 @@
 #include "Envelope.h"
 #include "Oscillator.h"
 
+#include <memory>
+
 //==============================================================================
 /**
 */
@@ -31,7 +33,7 @@ private:
     //==============================================================================
     std::list<int> mNoteList;
     Envelope mEnvelope;
-    Oscillator mOscillator;
+    std::unique_ptr<Oscillator> mOscillator;
 };
 
 #endif  // MONOSYNTH_H_INCLUDED

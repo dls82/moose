@@ -65,7 +65,7 @@ TEST_CASE( "sine oscillator", "[sine]" ) {
     AudioSampleBuffer audio(1,50);
     audio.clear();
 
-    Oscillator oscillator;
+    SineOscillator oscillator;
     oscillator.setSampleRate(48000);
     oscillator.note(80);
     oscillator.processBlock(audio,0,10);

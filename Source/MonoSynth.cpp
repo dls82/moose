@@ -3,6 +3,7 @@
 //==============================================================================
 MonoSynth::MonoSynth()
 {
+    mOscillator = std::unique_ptr<Oscillator>(new SineOscillator());
 }
 
 //==============================================================================
@@ -13,7 +14,7 @@ MonoSynth::~MonoSynth()
 //==============================================================================
 void MonoSynth::setSampleRate(const int sampleRate)
 {
-    mOscillator.setSampleRate(sampleRate);
+    mOscillator->setSampleRate(sampleRate);
 }
 
 //==============================================================================
@@ -37,7 +38,7 @@ void MonoSynth::processBlock(AudioSampleBuffer& buffer, MidiBuffer& midiMessages
 
         // render up to the next event (or end of buffer) using current state
         if(numThisTime > 0) {
-            mOscillator.processBlock(buffer, startSample, numThisTime);
+            mOscillator->processBlock(buffer, startSample, numThisTime);
             mEnvelope.processBlock(buffer, startSample, numThisTime);
         }
 
@@ -47,7 +48,7 @@ void MonoSynth::processBlock(AudioSampleBuffer& buffer, MidiBuffer& midiMessages
             if(m.isNoteOn())
             {
                 const int noteNumber = m.getNoteNumber();
-                mOscillator.note(noteNumber);
+                mOscillator->note(noteNumber);
                 mNoteList.push_back(noteNumber);
                 mEnvelope.on();
             }
@@ -57,7 +58,7 @@ void MonoSynth::processBlock(AudioSampleBuffer& buffer, MidiBuffer& midiMessages
                 if(mNoteList.empty())
                     mEnvelope.off();
                 else
-                    mOscillator.note(mNoteList.back());
+                    mOscillator->note(mNoteList.back());
             }
         }
 
