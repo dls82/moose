@@ -6,7 +6,6 @@
 #include "Oscillator.h"
 
 #include <cmath>
-#include <iostream>
 
 static const double ERR_TOL = 0.000001;
 
@@ -59,6 +58,28 @@ TEST_CASE( "impulse response", "[lowpass]" ) {
     REQUIRE(std::abs(audio.getSample(1,2)-0.281314433) < ERR_TOL);
     REQUIRE(std::abs(audio.getSample(1,11)+0.0022121917) < ERR_TOL);
     REQUIRE(std::abs(audio.getSample(1,25)-0.000159396572) < ERR_TOL);
+}
+
+TEST_CASE( "lowpass square", "[lowpass2]" ) {
+    const int sampleRate = 48000;
+    AudioSampleBuffer audio(1,sampleRate);
+    audio.clear();
+
+    SawOscillator oscillator;
+    oscillator.setSampleRate(sampleRate);
+    oscillator.note(80);
+    oscillator.processBlock(audio,0,sampleRate);
+    audio.applyGain(0,0,sampleRate,0.5f);
+
+    LowPass lowpass(1,sampleRate,100,1);
+    lowpass.processBlock(audio,0,sampleRate);
+
+    File file("/home/derek/Desktop/lowpass2.wav");
+    FileOutputStream* os = file.createOutputStream();
+    WavAudioFormat format;
+    AudioFormatWriter* writer = format.createWriterFor(os, sampleRate, 1, 16, NULL, 0);
+    writer->writeFromAudioSampleBuffer(audio,0,audio.getNumSamples());
+    delete writer;
 }
 
 TEST_CASE( "sine oscillator", "[sine]" ) {
