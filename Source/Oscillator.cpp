@@ -57,8 +57,7 @@ void SawOscillator::processBlock(AudioSampleBuffer& buffer, int currentIndex, in
 
     while(--numSamples >= 0)
     {
-        // phase offest so sawtooth begins at zero
-        const double time = 0.25 + mTimer * cyclesPerSecond / mSampleRate;
+        const double time = mTimer * cyclesPerSecond / mSampleRate;
         const double fracTime = time - (long)time;
         const float currentSample = (float) (1-(2.0 * fracTime));
 
@@ -98,7 +97,8 @@ void TriangleOscillator::processBlock(AudioSampleBuffer& buffer, int currentInde
 
     while(--numSamples >= 0)
     {
-        const double time = mTimer * cyclesPerSecond / mSampleRate;
+        // phase offest so triangle begins at zero
+        const double time = 0.25 + (mTimer * cyclesPerSecond / mSampleRate);
         const double fracTime = time - (long)time;
         const float currentSample
             = (fracTime < 0.5) ?
