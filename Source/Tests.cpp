@@ -6,8 +6,20 @@
 #include "Oscillator.h"
 
 #include <cmath>
+#include <memory>
+#include <string>
 
 static const double ERR_TOL = 0.000001;
+
+void write_wav(const AudioSampleBuffer& buffer, const int sampleRate, const std::string& path)
+{
+    File file(path);
+    FileOutputStream* os = file.createOutputStream();
+    WavAudioFormat format;
+    const std::unique_ptr<AudioFormatWriter> writer(
+        format.createWriterFor(os, sampleRate, 1, 16, NULL, 0));
+    writer->writeFromAudioSampleBuffer(buffer,0,buffer.getNumSamples());
+}
 
 TEST_CASE( "basic envelope check", "[monosynth]" ) {
     const int sampleRate = 44100;
@@ -27,14 +39,6 @@ TEST_CASE( "basic envelope check", "[monosynth]" ) {
     REQUIRE(audio.getSample(0,startSample+1) != 0.0f);
     REQUIRE(audio.getSample(0,endSample-1) != 0.0f);
     REQUIRE(audio.getSample(0,endSample) == 0.0f);
-
-    // example WAV writing
-    File file("/home/derek/Desktop/test.wav");
-    FileOutputStream* os = file.createOutputStream();
-    WavAudioFormat format;
-    AudioFormatWriter* writer = format.createWriterFor(os, sampleRate, 1, 16, NULL, 0);
-    writer->writeFromAudioSampleBuffer(audio,0,audio.getNumSamples());
-    delete writer;
 }
 
 // http://dsp.stackexchange.com/questions/20221/question-regarding-filter-implementation-audio-eq-cookbook
@@ -69,17 +73,12 @@ TEST_CASE( "lowpass square", "[lowpass2]" ) {
     oscillator.setSampleRate(sampleRate);
     oscillator.note(80);
     oscillator.processBlock(audio,0,sampleRate);
-    audio.applyGain(0,0,sampleRate,0.5f);
+    //audio.applyGain(0,0,sampleRate,0.5f);
 
     LowPass lowpass(1,sampleRate,100,1);
     lowpass.processBlock(audio,0,sampleRate);
 
-    File file("/home/derek/Desktop/lowpass2.wav");
-    FileOutputStream* os = file.createOutputStream();
-    WavAudioFormat format;
-    AudioFormatWriter* writer = format.createWriterFor(os, sampleRate, 1, 16, NULL, 0);
-    writer->writeFromAudioSampleBuffer(audio,0,audio.getNumSamples());
-    delete writer;
+    write_wav(audio,sampleRate,"~/Desktop/lowpass2.wav");
 }
 
 TEST_CASE( "sine oscillator", "[sine]" ) {
