@@ -44,7 +44,7 @@ void LowPass::processBlock(AudioSampleBuffer& buffer, int currentIndex, int numS
         {
             const double x0 = buffer.getSample(i,currentIndex);
             const double y0 = (b0*x0+b1*x1[i]+b2*x2[i]-a1*y1[i]-a2*y2[i])/a0;
-            buffer.addSample(i, currentIndex, y0);
+            buffer.setSample(i, currentIndex, y0);
             y2[i]=y1[i];
             y1[i]=y0;
             x2[i]=x1[i];
