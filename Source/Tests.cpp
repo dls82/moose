@@ -11,6 +11,8 @@
 
 static const double ERR_TOL = 0.000001;
 
+// example usage:
+// write_wav(buffer,sampleRate,"~/Desktop/filename.wav");
 void write_wav(const AudioSampleBuffer& buffer, const int sampleRate, const std::string& path)
 {
     File file(path);
@@ -21,7 +23,7 @@ void write_wav(const AudioSampleBuffer& buffer, const int sampleRate, const std:
     writer->writeFromAudioSampleBuffer(buffer,0,buffer.getNumSamples());
 }
 
-TEST_CASE( "basic envelope check", "[monosynth]" ) {
+TEST_CASE( "on_off_envelope", "[monosynth][envelope]" ) {
     const int sampleRate = 44100;
     const int startSample = 1000;
     const int endSample = 50000;
@@ -42,7 +44,7 @@ TEST_CASE( "basic envelope check", "[monosynth]" ) {
 }
 
 // http://dsp.stackexchange.com/questions/20221/question-regarding-filter-implementation-audio-eq-cookbook
-TEST_CASE( "impulse response", "[lowpass]" ) {
+TEST_CASE( "impulse_response", "[lowpass]" ) {
     // two channel buffer, each impulse shifted by one sample
     AudioSampleBuffer audio(2,50);
     audio.clear();
@@ -64,7 +66,7 @@ TEST_CASE( "impulse response", "[lowpass]" ) {
     REQUIRE(std::abs(audio.getSample(1,25)-0.000159396572) < ERR_TOL);
 }
 
-TEST_CASE( "lowpass square", "[lowpass2]" ) {
+TEST_CASE( "filter_saw", "[filter]" ) {
     const int sampleRate = 48000;
     AudioSampleBuffer audio(1,sampleRate);
     audio.clear();
@@ -73,15 +75,18 @@ TEST_CASE( "lowpass square", "[lowpass2]" ) {
     oscillator.setSampleRate(sampleRate);
     oscillator.note(80);
     oscillator.processBlock(audio,0,sampleRate);
-    //audio.applyGain(0,0,sampleRate,0.5f);
 
-    LowPass lowpass(1,sampleRate,100,1);
+    LowPass lowpass(1,sampleRate,1000,1);
     lowpass.processBlock(audio,0,sampleRate);
 
-    write_wav(audio,sampleRate,"~/Desktop/lowpass2.wav");
+    REQUIRE(std::abs(audio.getSample(0,0)-0.00401550485) < ERR_TOL);
+    REQUIRE(std::abs(audio.getSample(0,4)-0.134916037) < ERR_TOL);
+    REQUIRE(std::abs(audio.getSample(0,9)-0.420682281) < ERR_TOL);
+    REQUIRE(std::abs(audio.getSample(0,14)-0.647944152) < ERR_TOL);
+    REQUIRE(std::abs(audio.getSample(0,19)-0.72311455) < ERR_TOL);
 }
 
-TEST_CASE( "sine oscillator", "[sine]" ) {
+TEST_CASE( "sine", "[oscillator]" ) {
     AudioSampleBuffer audio(1,50);
     audio.clear();
 
