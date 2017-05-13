@@ -27,5 +27,5 @@ void Envelope::off()
 void Envelope::processBlock(AudioSampleBuffer& buffer, int currentIndex, int numSamples)
 {
     for (int i = buffer.getNumChannels(); --i >= 0;)
-        buffer.applyGain(i, currentIndex, numSamples, mGain);
+        buffer.applyGain(i, currentIndex, numSamples, (float) mGain);
 }

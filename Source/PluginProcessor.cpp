@@ -23,7 +23,7 @@ MooseAudioProcessor::~MooseAudioProcessor()
 //==============================================================================
 const String MooseAudioProcessor::getName() const
 {
-    return JucePlugin_Name;
+    return ProjectInfo::projectName;
 }
 
 int MooseAudioProcessor::getNumParameters()
@@ -31,43 +31,23 @@ int MooseAudioProcessor::getNumParameters()
     return 0;
 }
 
-float MooseAudioProcessor::getParameter (int index)
+float MooseAudioProcessor::getParameter (int /*index*/)
 {
     return 0.0f;
 }
 
-void MooseAudioProcessor::setParameter (int index, float newValue)
+void MooseAudioProcessor::setParameter (int /*index*/, float /*newValue*/)
 {
 }
 
-const String MooseAudioProcessor::getParameterName (int index)
+const String MooseAudioProcessor::getParameterName (int /*index*/)
 {
     return String();
 }
 
-const String MooseAudioProcessor::getParameterText (int index)
+const String MooseAudioProcessor::getParameterText (int /*index*/)
 {
     return String();
-}
-
-const String MooseAudioProcessor::getInputChannelName (int channelIndex) const
-{
-    return String (channelIndex + 1);
-}
-
-const String MooseAudioProcessor::getOutputChannelName (int channelIndex) const
-{
-    return String (channelIndex + 1);
-}
-
-bool MooseAudioProcessor::isInputChannelStereoPair (int index) const
-{
-    return true;
-}
-
-bool MooseAudioProcessor::isOutputChannelStereoPair (int index) const
-{
-    return true;
 }
 
 bool MooseAudioProcessor::acceptsMidi() const
@@ -88,11 +68,6 @@ bool MooseAudioProcessor::producesMidi() const
    #endif
 }
 
-bool MooseAudioProcessor::silenceInProducesSilenceOut() const
-{
-    return false;
-}
-
 double MooseAudioProcessor::getTailLengthSeconds() const
 {
     return 0.0;
@@ -109,16 +84,16 @@ int MooseAudioProcessor::getCurrentProgram()
     return 0;
 }
 
-void MooseAudioProcessor::setCurrentProgram (int index)
+void MooseAudioProcessor::setCurrentProgram (int /*index*/)
 {
 }
 
-const String MooseAudioProcessor::getProgramName (int index)
+const String MooseAudioProcessor::getProgramName (int /*index*/)
 {
     return String();
 }
 
-void MooseAudioProcessor::changeProgramName (int index, const String& newName)
+void MooseAudioProcessor::changeProgramName (int /*index*/, const String& /*newName*/)
 {
 }
 
@@ -144,7 +119,7 @@ void MooseAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& m
     // I've added this to avoid people getting screaming feedback
     // when they first compile the plugin, but obviously you don't need to
     // this code if your algorithm already fills all the output channels.
-    for (int i = getNumInputChannels(); i < getNumOutputChannels(); ++i)
+    for (int i = getTotalNumInputChannels(); i < getTotalNumInputChannels(); ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
     mMonoSynth.processBlock(buffer, midiMessages);
@@ -153,7 +128,7 @@ void MooseAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& m
 //==============================================================================
 bool MooseAudioProcessor::hasEditor() const
 {
-    return true; // (change this to false if you choose to not supply an editor)
+    return false; // (change this to false if you choose to not supply an editor)
 }
 
 AudioProcessorEditor* MooseAudioProcessor::createEditor()
@@ -162,14 +137,14 @@ AudioProcessorEditor* MooseAudioProcessor::createEditor()
 }
 
 //==============================================================================
-void MooseAudioProcessor::getStateInformation (MemoryBlock& destData)
+void MooseAudioProcessor::getStateInformation (MemoryBlock& /*destData*/)
 {
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
 }
 
-void MooseAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+void MooseAudioProcessor::setStateInformation (const void* /*data*/, int /*sizeInBytes*/)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
@@ -177,7 +152,7 @@ void MooseAudioProcessor::setStateInformation (const void* data, int sizeInBytes
 
 //==============================================================================
 // This creates new instances of the plugin..
-AudioProcessor* JUCE_CALLTYPE createPluginFilter()
+juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new MooseAudioProcessor();
 }
